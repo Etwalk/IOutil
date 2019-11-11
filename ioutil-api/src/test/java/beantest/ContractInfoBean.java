@@ -1,5 +1,6 @@
 package beantest;
 
+import annotation.ExcelBuilderAnnotation;
 import annotation.ParaseExcelAnnotation;
 
 /**
@@ -8,8 +9,10 @@ import annotation.ParaseExcelAnnotation;
  */
 public class ContractInfoBean {
     @ParaseExcelAnnotation(index = 0)
+    @ExcelBuilderAnnotation("合同编号")
     private String contracId;
     @ParaseExcelAnnotation(index = 1)
+    @ExcelBuilderAnnotation("客户姓名")
     private String username;
     @ParaseExcelAnnotation(index = 2)
     private String type;

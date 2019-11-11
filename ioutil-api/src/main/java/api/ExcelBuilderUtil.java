@@ -5,6 +5,9 @@ import exception.ExcelBuilderException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -51,11 +54,10 @@ public class ExcelBuilderUtil<T> {
                 row = hssfSheet.createRow(index);
 
                 T t = it.next();
-                for(int i =0 ;i<fields.length;i++){
-                    Field field = fields[i];
+                int i=0;
+                for(Field field: fields){
                     if(null != field.getAnnotation(ExcelBuilderAnnotation.class)){
                         String fieldName = field.getName();
-                        i++;
                         HSSFCell cell = row.createCell(i);
                         cell.setCellStyle(style1);
                         field.setAccessible(true);
@@ -78,12 +80,13 @@ public class ExcelBuilderUtil<T> {
                             HSSFRichTextString richTextString = new HSSFRichTextString(textValue);
                             cell.setCellValue(richTextString);
                         }
+                        i++;
                     }
 
                 }
             }
 
-
+           workbook.write(out);
         }catch (IllegalAccessException e){
             e.printStackTrace();
             throw new ExcelBuilderException("set field accessible exception");
@@ -92,6 +95,28 @@ public class ExcelBuilderUtil<T> {
             throw new ExcelBuilderException("excel builder exception");
         }
     }
+
+    public void exportExcelToFile(String title, Collection<T> dateset, String  filePath,Class clazz){
+        try {
+            File file = new File(filePath);
+            OutputStream outputStream = new FileOutputStream(file);
+            exportExcel(title,dateset,outputStream,clazz);
+        }catch (IOException e){
+            e.printStackTrace();
+            throw new ExcelBuilderException("create fileoutputstream exception");
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
     private HSSFCellStyle getTitleStyle(HSSFWorkbook workbook){
         HSSFCellStyle style = workbook.createCellStyle();
 
