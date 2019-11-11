@@ -1,6 +1,7 @@
 package exception;
 
 /**
+ * 解析excel异常类
  * @author Sherlock.Wu
  * @date 2019/11/11
  */

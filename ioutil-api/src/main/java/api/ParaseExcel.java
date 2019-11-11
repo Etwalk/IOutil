@@ -64,10 +64,10 @@ public class ParaseExcel<T> {
      */
     private List<T> excelRowToBean(InputStream inputStream, File file, Class<T> clazz) {
         if (null == clazz) {
-            throw new ParaseExcelException("Empty value in parameter ");
+            throw new ParaseExcelException("clazz is null ");
         }
         if (null == inputStream && null == file) {
-            throw new ParaseExcelException("Empty value in parameter ");
+            throw new ParaseExcelException("inputStream or file are null ");
         }
         Workbook workbook = null;
 
@@ -133,10 +133,15 @@ public class ParaseExcel<T> {
         } catch (InstantiationException e) {
             e.printStackTrace();
             throw new ParaseExcelException("create a bean object exception");
-        } /*catch (InvocationTargetException e) {
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new ParaseExcelException("Parase excel exception");
+        }
+            /*catch (InvocationTargetException e) {
             e.printStackTrace();
             throw new ParaseExcelException("reflect method invoke exception");
         }*/
+
         return resultList;
 
     }
