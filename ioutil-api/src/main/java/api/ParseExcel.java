@@ -5,17 +5,17 @@ import annotation.ExcelCellListAnnotation;
 import annotation.ExcelCellListBeginRowAnnotation;
 import annotation.ExcelCellLocationAnnotation;
 import exception.ParaseExcelException;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,15 +40,15 @@ public class ParseExcel<T> {
      * @param path
      */
     public List readExcelBeans(String path, Class clazz, int indexSheet) {
-        File excFile = getFileByPath(path);
-        return excelRowToBeans(null, excFile, clazz, indexSheet);
+        InputStream inputStream = getFileByPath(path);
+        return excelRowToBeans(inputStream, clazz, indexSheet);
     }
 
     /**
      * @param inputStream 为关闭流，需要在流创建的地方关闭流
      */
     public List readExcelBeans(InputStream inputStream, Class clazz, int indexSheet) {
-        return excelRowToBeans(inputStream, null, clazz, indexSheet);
+        return excelRowToBeans(inputStream, clazz, indexSheet);
 
     }
 
@@ -60,15 +60,15 @@ public class ParseExcel<T> {
      * @param path
      */
     public Object readExcelBean(String path, Class clazz, int indexSheet) {
-        File excFile = getFileByPath(path);
-        return excelRowToBean(null, excFile, clazz, indexSheet);
+        InputStream inputStream = getFileByPath(path);
+        return excelRowToBean(inputStream, clazz, indexSheet);
     }
 
     /**
      * @param inputStream 为关闭流，需要在流创建的地方关闭流
      */
     public Object readExcelBean(InputStream inputStream, Class clazz, int indexSheet) {
-        return excelRowToBean(inputStream, null, clazz, indexSheet);
+        return excelRowToBean(inputStream, clazz, indexSheet);
 
     }
 
@@ -194,25 +194,22 @@ public class ParseExcel<T> {
 
     /**
      * @param inputStream
-     * @param file
      * @param clazz
      * @return
      */
-    private static Object excelRowToBean(InputStream inputStream, File file, Class clazz, int sheetIndex) {
+    private static Object excelRowToBean(InputStream inputStream, Class clazz, int sheetIndex) {
         if (null == clazz) {
             throw new ParaseExcelException("clazz is null ");
         }
-        if (null == inputStream && null == file) {
-            throw new ParaseExcelException("inputStream or file are null ");
+        if (null == inputStream) {
+            throw new ParaseExcelException("inputStream  is null ");
         }
         Workbook workbook = null;
         Object t = null;
         try {
-            if (null == inputStream) {
-                workbook = WorkbookFactory.create(file);
-            } else {
-                workbook = WorkbookFactory.create(inputStream);
-            }
+
+            workbook = WorkbookFactory.create(inputStream);
+
             Sheet sheetAt = workbook.getSheetAt(sheetIndex);
             Field[] fields = clazz.getDeclaredFields();
 
@@ -253,21 +250,19 @@ public class ParseExcel<T> {
     }
 
 
-    private static List excelRowToBeans(InputStream inputStream, File file, Class clazz, int sheetIndex) {
+    private static List excelRowToBeans(InputStream inputStream, Class clazz, int sheetIndex) {
         if (null == clazz) {
             throw new ParaseExcelException("clazz is null ");
         }
-        if (null == inputStream && null == file) {
-            throw new ParaseExcelException("inputStream or file are null ");
+        if (null == inputStream) {
+            throw new ParaseExcelException("inputStream is null ");
         }
         Workbook workbook = null;
         List resultList = new ArrayList();
         try {
-            if (null == inputStream) {
-                workbook = WorkbookFactory.create(file);
-            } else {
-                workbook = WorkbookFactory.create(inputStream);
-            }
+
+            workbook = WorkbookFactory.create(inputStream);
+
             Sheet sheetAt = workbook.getSheetAt(sheetIndex);
             int beginRow = -1;
             Field[] fields = clazz.getDeclaredFields();
@@ -400,35 +395,146 @@ public class ParseExcel<T> {
 
     }*/
 
-    private File getFileByPath(String path) {
+    /**
+     * 都转化成stream 就好了啊
+     *
+     * @param path
+     * @return
+     */
+    private InputStream getFileByPath(String path) {
         if (null == path || "".equals(path)) {
             throw new ParaseExcelException("The file path is null");
         }
-        File excFile = new File(path);
-        if (!excFile.exists()) {
-            throw new ParaseExcelException("the file does not exist：" + path);
-        }
-        if (!(path.endsWith(EXTENSION_XLS) || path.endsWith(EXTENSION_XLSX))) {
-            throw new ParaseExcelException("this file is not excel");
-        }
-        return excFile;
+        return ParseExcel.class.getResourceAsStream("/customerInfo.xls");
     }
 
-    public static byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        byte[] dataBytes;
-        while ((len = inputStream.read(buffer)) != -1) {
-            baos.write(buffer, 0, len);
+    private static void setObjectFieldStringValue(Cell cell,Object obj,Field field)throws IllegalAccessException {
+        field.setAccessible(true);
+        if(Cell.CELL_TYPE_STRING ==cell.getCellType()){
+          field.set(obj,cell.getStringCellValue());
+        }else if(Cell.CELL_TYPE_NUMERIC == cell.getCellType()){
+            if(HSSFDateUtil.isCellDateFormatted(cell)){
+                Date date = cell.getDateCellValue();
+                field.set(obj,new SimpleDateFormat( "yyyy-MM-dd").format(date));
+            }else{
+                //这个地方怎么解决自动添加小数点的问题？
+                double cellValue = cell.getNumericCellValue();
+                field.set(obj,String.valueOf(cellValue));
+            }
         }
-        baos.flush();
-        dataBytes = baos.toByteArray();
-        return dataBytes;
+
+    }
+    //怎么样才能用一个方法来解决bean填入excel中和excel 读取到bean中即便有List
+
+    public static Object parseExcelToObject(InputStream inputStream, Class clazz, int sheetIndex){
+        if (null == clazz) {
+            throw new ParaseExcelException("clazz is null ");
+        }
+        if (null == inputStream) {
+            throw new ParaseExcelException("inputStream  is null ");
+        }
+        Workbook workbook = null;
+        Object t = null;
+        try {
+
+            workbook = WorkbookFactory.create(inputStream);
+
+            Sheet sheetAt = workbook.getSheetAt(sheetIndex);
+            Field[] fields = clazz.getDeclaredFields();
+
+
+            if(null != clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class)){
+                //直接循环
+                return valueCycle((ExcelCellListBeginRowAnnotation)clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class),sheetAt,clazz);
+            }else{
+                t = clazz.newInstance();
+                for(Field field : fields){
+                    if(null !=field.getAnnotation(ExcelCellBeanAnnotation.class)){
+                        int rowNum = field.getAnnotation(ExcelCellBeanAnnotation.class).row();
+                        int index = field.getAnnotation(ExcelCellBeanAnnotation.class).index();
+                        Row row = sheetAt.getRow(rowNum);
+                        Cell cell = row.getCell(index);
+                        setObjectFieldStringValue(cell,t,field);
+                    }else if(null != field.getAnnotation(ExcelCellListBeginRowAnnotation.class)&&"interface java.util.List".equals(field.getType().toString())){
+                        int beginIndex = field.getAnnotation(ExcelCellListBeginRowAnnotation.class).beginRow();
+                        if(INIT_ERROR_CODE == beginIndex){
+                            throw new ParaseExcelException("list annotation beginIndex not init");
+                        }
+                        Type genericType = field.getGenericType();
+                        if (genericType == null) {
+                            throw new ParaseExcelException("please make sure generics of list");
+                        }
+                        // 如果是泛型参数的类型
+                        if (genericType instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) genericType;
+                            //得到泛型里的class类型对象
+                            Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[0];
+                            List list = valueCycle(field.getAnnotation(ExcelCellListBeginRowAnnotation.class),sheetAt,genericClazz);
+                            field.setAccessible(true);
+                            field.set(t,list);
+                        }
+
+
+                    }
+
+                }
+                return t;
+
+            }
+
+
+
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+            throw new ParaseExcelException("create a workbook object exception");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ParaseExcelException("create a hssfWorkbook object exception");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new ParaseExcelException("create a bean object exception");
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            throw new ParaseExcelException("create a bean object exception");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ParaseExcelException("Parse excel exception");
+        }
+
     }
 
-    public static InputStream getNewStream(InputStream inputStream) throws IOException {
-        byte[] dataBytes = getBytes(inputStream);
-        return new ByteArrayInputStream(dataBytes);
+    private static List valueCycle(ExcelCellListBeginRowAnnotation beginRowAnnotation,Sheet sheetAt,Class clazz){
+        List resultList = new ArrayList();
+        try {
+            int beginRow = -1;
+            if (beginRowAnnotation == null) {
+                throw new ParaseExcelException(" ExcelCellListBeginRowAnnotation beginRow is error");
+            } else {
+                beginRow = beginRowAnnotation.beginRow();
+            }
+            Field[] fields = clazz.getDeclaredFields();
+            for (Row row : sheetAt) {
+                if (row.getRowNum() < beginRow) {
+                    continue;
+                }
+                if (null == row.getCell(0) || "".equals(row.getCell(0).getStringCellValue())) {
+                    break;
+                }
+                Object t = clazz.newInstance();
+                for (Field field : fields) {
+                    int index = field.getAnnotation(ExcelCellListAnnotation.class).index();
+                    Cell cell = row.getCell(index);
+                    setObjectFieldStringValue(cell,t,field);
+                }
+                //将循环一行的结果添加到返回的结果中
+                resultList.add(t);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new ParaseExcelException("valueCycle exception");
+        }
+       return resultList;
     }
+
+
 }

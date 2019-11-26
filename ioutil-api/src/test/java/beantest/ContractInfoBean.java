@@ -2,6 +2,7 @@ package beantest;
 
 import annotation.ExcelBuilderAnnotation;
 import annotation.ExcelCellBeanAnnotation;
+import annotation.ExcelCellListBeginRowAnnotation;
 import annotation.ExcelCellLocationAnnotation;
 import lombok.Data;
 import lombok.ToString;
@@ -25,7 +26,7 @@ public class ContractInfoBean {
     private String username;
     @ExcelCellBeanAnnotation(row = 2,index = 1)
     private String type;
-
+    @ExcelCellListBeginRowAnnotation(beginRow = 11)
     List<Partner> partnerList;
 
 }

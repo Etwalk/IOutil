@@ -35,12 +35,12 @@ public class ParaseExcelTestMain {
 
         ParseExcel contractInfoBeanExcelUtil = new ParseExcel();
         List contractInfoBeans = contractInfoBeanExcelUtil.readExcelBeans(new ByteArrayInputStream(dataBytes), Partner.class,0);
-        Object obj = contractInfoBeanExcelUtil.readExcelBean(new ByteArrayInputStream(dataBytes),ContractInfoBean.class,0);
+        Object obj = ParseExcel.parseExcelToObject(new ByteArrayInputStream(dataBytes),ContractInfoBean.class,0);
         System.out.println(obj);
-        System.out.println(contractInfoBeans);
-        System.out.println(contractInfoBeans.size());
-        ContractInfoBean contractInfoBean = new ContractInfoBean();
-        System.out.println(contractInfoBean);
+        if(ContractInfoBean.class.isInstance(obj)){
+            ContractInfoBean contractInfoBean = (ContractInfoBean)obj;
+            System.out.println(contractInfoBean);
+        }
 
 //        ExcelBuilderUtil<ContractInfoBean> excelBuilderUtil = new ExcelBuilderUtil<ContractInfoBean>();
 //        excelBuilderUtil.exportExcelToFile("客户信息表",contractInfoBeans,"D:/test.xls",ContractInfoBean.class);
