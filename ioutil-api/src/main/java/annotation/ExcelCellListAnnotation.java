@@ -6,10 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.FIELD})
-/**
- * index值从0开始，如果超过了excel每行的单元格数，则结果为null
- */
-public @interface ParaseExcelAnnotation {
-    int index() default 0;
+@Target({ElementType.FIELD})
+public @interface ExcelCellListAnnotation {
+    /**
+     * 该数据在那一列
+     * @return
+     */
+    int index();
+
 }
