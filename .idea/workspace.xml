@@ -3,11 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="55200c0e-7eca-40a0-a020-d49e55e35483" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellListBeginRowAnnotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellListBeginRowAnnotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioutil-api/src/main/java/api/ExcelBuilderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/main/java/api/BuildExcelUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ioutil-api/src/test/java/beantest/ContractInfoBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/test/java/beantest/ContractInfoBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioutil-api/src/main/java/exception/ExcelBuilderException.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/main/java/exception/BuildExcelException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioutil-api/target/classes/api/ExcelBuilderUtil.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ioutil-api/target/classes/api/ParseExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/target/classes/api/ParseExcel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioutil-api/target/classes/exception/ExcelBuilderException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioutil-api/target/test-classes/maintest/ParaseExcelTestMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/ioutil-api/target/test-classes/maintest/ParaseExcelTestMain.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,54 +53,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="518" column="17" lean-forward="true" selection-start-line="518" selection-start-column="17" selection-end-line="518" selection-end-column="17" />
+            <state relative-caret-position="138">
+              <caret line="256" column="122" selection-start-line="256" selection-start-column="108" selection-end-line="256" selection-end-column="122" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/development/developmentLanguage/JAVA/JDK1.8/JDK/src.zip!/java/lang/reflect/Field.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-826">
-              <caret line="1117" column="35" selection-start-line="1117" selection-start-column="34" selection-end-line="1117" selection-end-column="35" />
-              <folding>
-                <element signature="e#6809#6810#0" expanded="true" />
-                <element signature="e#6836#6837#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi/3.9/poi-3.9-sources.jar!/org/apache/poi/ss/usermodel/Cell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="241" column="10" selection-start-line="241" selection-start-column="4" selection-end-line="241" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellListAnnotation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="41" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellListBeginRowAnnotation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -115,10 +75,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellBeanAnnotation.java">
+        <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="14" column="41" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="41" />
+            <state relative-caret-position="238">
+              <caret line="19" column="101" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="101" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -127,10 +87,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java">
+        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/BuildExcelUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+            <state relative-caret-position="179">
+              <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="174" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/PDFBuilderUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/exception/BuildExcelException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/maintest/BuilderExcelTestMain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -157,7 +147,6 @@
       <list>
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/exception/ExcelBuilderException.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelBuilderAnnotation.java" />
-        <option value="$PROJECT_DIR$/ioutil-api/src/main/java/api/ExcelBuilderUtil.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/exception/ParaseExcelException.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/api/ParaseExcel.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ParaseExcelAnnotation.java" />
@@ -171,7 +160,10 @@
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/annotation/ExcelCellListBeginRowAnnotation.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/test/java/beantest/ContractInfoBean.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java" />
+        <option value="$PROJECT_DIR$/ioutil-api/src/main/java/api/ExcelBuilderUtil.java" />
         <option value="$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java" />
+        <option value="$PROJECT_DIR$/ioutil-api/src/test/java/maintest/BuilderExcelTestMain.java" />
+        <option value="$PROJECT_DIR$/ioutil-api/src/main/java/api/BuildExcelUtil.java" />
       </list>
     </option>
   </component>
@@ -248,7 +240,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="annotation" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="util" type="b2602c69:ProjectViewProjectNode" />
@@ -257,7 +249,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="util" type="b2602c69:ProjectViewProjectNode" />
@@ -291,14 +283,6 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="maintest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="util" type="b2602c69:ProjectViewProjectNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-              <item name="ioutil-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="util" type="b2602c69:ProjectViewProjectNode" />
@@ -346,7 +330,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.BuilderExcelTestMain">
+    <configuration name="BuilderExcelTestMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="maintest.BuilderExcelTestMain" />
+      <module name="ioutil-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="maintest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ParaseExcelTestMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="maintest.ParaseExcelTestMain" />
       <module name="ioutil-api" />
@@ -362,6 +359,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BuilderExcelTestMain" />
         <item itemvalue="Application.ParaseExcelTestMain" />
       </list>
     </recent_temporary>
@@ -389,7 +387,7 @@
       <workItem from="1574297895887" duration="1867000" />
       <workItem from="1574389298455" duration="9358000" />
       <workItem from="1574642927213" duration="16417000" />
-      <workItem from="1574728584991" duration="15121000" />
+      <workItem from="1574728584991" duration="20693000" />
     </task>
     <task id="LOCAL-00001" summary="把excel解析成java bean">
       <created>1573451762413</created>
@@ -419,11 +417,18 @@
       <option name="project" value="LOCAL" />
       <updated>1574733996282</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="添加将excel解析成bean的一个比较眉毛胡子一把抓的方法">
+      <created>1574749664102</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574749664102</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84919000" />
+    <option name="totallyTimeSpent" value="90491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -469,26 +474,21 @@
     <MESSAGE value="添加生成excel的方法" />
     <MESSAGE value="修改并测试生成excel的方法" />
     <MESSAGE value="添加excel的解析方法一个是listbean一个是bean" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加excel的解析方法一个是listbean一个是bean" />
+    <MESSAGE value="添加将excel解析成bean的一个比较眉毛胡子一把抓的方法" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加将excel解析成bean的一个比较眉毛胡子一把抓的方法" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java</url>
-          <line>145</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java</url>
-          <line>206</line>
+          <line>86</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java</url>
-          <line>449</line>
+          <line>248</line>
           <properties />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
@@ -538,13 +538,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/exception/ExcelBuilderException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -677,27 +670,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ExcelBuilderUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="68" column="65" selection-start-line="68" selection-start-column="62" selection-end-line="68" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/FileUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/PDFBuilderUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -742,30 +718,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/beantest/Partner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/beantest/ContractInfoBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
           <caret line="28" column="50" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="518" column="17" lean-forward="true" selection-start-line="518" selection-start-column="17" selection-end-line="518" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -793,10 +749,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/beantest/Partner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/ParseExcel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="256" column="122" selection-start-line="256" selection-start-column="108" selection-end-line="256" selection-end-column="122" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/PDFBuilderUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/exception/BuildExcelException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/maintest/ParaseExcelTestMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+        <state relative-caret-position="238">
+          <caret line="19" column="101" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="101" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/test/java/maintest/BuilderExcelTestMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="31" lean-forward="true" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ioutil-api/src/main/java/api/BuildExcelUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="174" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

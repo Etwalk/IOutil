@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface ExcelBuilderAnnotation {
+public @interface BuildExcelAnnotation {
     String value() default "title";
 }

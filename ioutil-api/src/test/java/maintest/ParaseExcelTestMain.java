@@ -1,6 +1,5 @@
 package maintest;
 
-import api.ExcelBuilderUtil;
 import api.ParseExcel;
 import beantest.ContractInfoBean;
 import beantest.Partner;
@@ -8,7 +7,6 @@ import beantest.Partner;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -42,7 +40,5 @@ public class ParaseExcelTestMain {
             System.out.println(contractInfoBean);
         }
 
-//        ExcelBuilderUtil<ContractInfoBean> excelBuilderUtil = new ExcelBuilderUtil<ContractInfoBean>();
-//        excelBuilderUtil.exportExcelToFile("客户信息表",contractInfoBeans,"D:/test.xls",ContractInfoBean.class);
     }
 }
