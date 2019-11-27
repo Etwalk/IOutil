@@ -1,6 +1,8 @@
 package api;
 
 import annotation.BuildExcelAnnotation;
+import annotation.ExcelCellBeanAnnotation;
+import annotation.ExcelCellListAnnotation;
 import annotation.ExcelCellListBeginRowAnnotation;
 import exception.BuildExcelException;
 import exception.ParaseExcelException;
@@ -11,9 +13,12 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Sherlock.Wu
@@ -164,7 +169,7 @@ public class BuildExcelUtil<T> {
             workbook = WorkbookFactory.create(inputStream);
 
             Sheet sheetAt = workbook.getSheetAt(sheetIndex);
-            System.out.println(dateset.getClass().getName());
+            System.out.println(workbook);
             if ("java.util.ArrayList".equals(dateset.getClass().getName())) {
                 //这个地方直接循环
                 if (null != clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class)) {
@@ -173,64 +178,84 @@ public class BuildExcelUtil<T> {
                     if (beginRow < 0) {
                         throw new ParaseExcelException("beginRow can not less zero");
                     }
-                }else {
-                    //直接添加到后面，
+                    writeListToExcel((List)dateset,beginRow,sheetAt,clazz);
+                    //如果开始的不为行大于等于0则不加标题,即便有BuildExcelAnnotation也不解析使用。
+                }
+            } else if (dateset.getClass().getName().equals(clazz.getName())) {
+                Field[] fields = clazz.getDeclaredFields();
+                for (Field field : fields) {
+                    if (null != field.getAnnotation(ExcelCellBeanAnnotation.class) && !("interface java.util.List".equals(field.getType().toString()))) {
+                        int rowNum = field.getAnnotation(ExcelCellBeanAnnotation.class).row();
+                        int index = field.getAnnotation(ExcelCellBeanAnnotation.class).index();
+                        Row row = sheetAt.getRow(rowNum);
+                        Cell cell = row.getCell(index);
+                        field.setAccessible(true);
+                        field.get(dateset);
+                        System.out.println("field:" + field.get(dateset));
+                        cell.setCellValue(field.get(dateset).toString());
+                    } else if (null != field.getAnnotation(ExcelCellListBeginRowAnnotation.class) && "interface java.util.List".equals(field.getType().toString())) {
+                        //循环遍历插入值
+                        int beginIndex = field.getAnnotation(ExcelCellListBeginRowAnnotation.class).beginRow();
+                        if (beginIndex < 0) {
+                            throw new ParaseExcelException("list annotation beginIndex not init");
+                        }
+                        Type genericType = field.getGenericType();
+                        if (genericType == null) {
+                            throw new ParaseExcelException("please make sure generics of list");
+                        }
+                        // 如果是泛型参数的类型
+                        if (genericType instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) genericType;
+                            //得到泛型里的class类型对象
+                            Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[0];
+                            field.setAccessible(true);
+                            System.out.println(field.get(dateset));
+                            List list = (List) field.get(dateset);
+                            writeListToExcel(list,beginIndex,sheetAt,genericClazz);
+                        }
+                    }
                 }
             }
 
-//            if(null != clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class)){
-//                //直接循环写入cell值
-//                ExcelCellListBeginRowAnnotation beginRowAnnotation =(ExcelCellListBeginRowAnnotation)clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class);
-//                int beginRow = beginRowAnnotation.beginRow();
-//                if(beginRow<0){
-//                    throw new ParaseExcelException("beginRow can not less zero");
-//                }
-//
-//                return ;
-//            }else{
-//                for(Field field : fields){
-//                    if(null !=field.getAnnotation(ExcelCellBeanAnnotation.class)){
-//                        int rowNum = field.getAnnotation(ExcelCellBeanAnnotation.class).row();
-//                        int index = field.getAnnotation(ExcelCellBeanAnnotation.class).index();
-//                        Row row = sheetAt.getRow(rowNum);
-//                        Cell cell = row.getCell(index);
-//                    }else if(null != field.getAnnotation(ExcelCellListBeginRowAnnotation.class)&&"interface java.util.List".equals(field.getType().toString())){
-//                        //循环遍历插入值
-//                        int beginIndex = field.getAnnotation(ExcelCellListBeginRowAnnotation.class).beginRow();
-//                        if(INIT_ERROR_CODE == beginIndex){
-//                            throw new ParaseExcelException("list annotation beginIndex not init");
-//                        }
-//                        Type genericType = field.getGenericType();
-//                        if (genericType == null) {
-//                            throw new ParaseExcelException("please make sure generics of list");
-//                        }
-//                        // 如果是泛型参数的类型
-//                        if (genericType instanceof ParameterizedType) {
-//                            ParameterizedType pt = (ParameterizedType) genericType;
-//                            //得到泛型里的class类型对象
-//                            Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[0];
-//                            List list = valueCycle(field.getAnnotation(ExcelCellListBeginRowAnnotation.class),sheetAt,genericClazz);
-//                            field.setAccessible(true);
-//                            field.set(t,list);
-//                        }
-//
-//
-//                    }
-//
-//                }
-//                return t;
-
-//            }
-
-        } catch (IOException e) {
+            workbook.write(out);
+        } catch (Exception e) {
             e.printStackTrace();
             throw new BuildExcelException("IOException");
-        } catch (InvalidFormatException e) {
+        }
+
+    }
+
+    private static void writeListToExcel(List list,int beginRow,Sheet sheet,Class clazz){
+        if(null == list){
+            throw new ParaseExcelException("list is null");
+        }
+        try{
+            Field[] fields = clazz.getDeclaredFields();
+            for(int i = 0;i<list.size();i++){
+                Object object =list.get(i);
+                Row row =sheet.getRow(beginRow+i);
+                for(Field field : fields){
+                    if(null !=field.getAnnotation(ExcelCellListAnnotation.class)&& !("interface java.util.List".equals(field.getType().toString()))){
+                        int index = field.getAnnotation(ExcelCellListAnnotation.class).index();
+                        if(index>=0){
+                            Cell cell = row.getCell(index);
+                            field.setAccessible(true);
+                            field.get(object);
+                            System.out.println(field.get(object));
+                            if(field.get(object)!=null){
+                                cell.setCellValue(field.get(object).toString());
+                            }
+
+                        }
+                    }
+                }
+            }
+        }catch(Exception e){
             e.printStackTrace();
             throw new BuildExcelException();
         }
 
+
     }
-    //需要的一个是定点填一个是循环填
 
 }

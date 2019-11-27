@@ -1,9 +1,6 @@
 package api;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * @author Sherlock.Wu
@@ -38,5 +35,14 @@ public class InputStreamUtil {
     public static InputStream getNewStream(InputStream inputStream) throws IOException {
         byte[] dataBytes = getBytes(inputStream);
         return new ByteArrayInputStream(dataBytes);
+    }
+    public static void inputToOutputStream(InputStream inputStream,OutputStream outputStream)throws IOException{
+        byte[] buffer = new byte[1024];
+        int len;
+        byte[] dataBytes;
+        while ((len = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, len);
+        }
+        outputStream.flush();
     }
 }

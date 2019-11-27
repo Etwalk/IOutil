@@ -6,5 +6,5 @@ package api;
  * @author Sherlock.Wu
  * @date 2019/11/12
  */
-public class PDFBuilderUtil {
+public class BuildPDFUtil {
 }
