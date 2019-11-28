@@ -36,6 +36,13 @@ public class InputStreamUtil {
         byte[] dataBytes = getBytes(inputStream);
         return new ByteArrayInputStream(dataBytes);
     }
+
+    /**
+     * 把inputStream 中的数据放到outputStream中
+     * @param inputStream
+     * @param outputStream
+     * @throws IOException
+     */
     public static void inputToOutputStream(InputStream inputStream,OutputStream outputStream)throws IOException{
         byte[] buffer = new byte[1024];
         int len;
@@ -44,5 +51,14 @@ public class InputStreamUtil {
             outputStream.write(buffer, 0, len);
         }
         outputStream.flush();
+    }
+    public static void close(InputStream inputStream){
+        try {
+            if(null != inputStream){
+                inputStream.close();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

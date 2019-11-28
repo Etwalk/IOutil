@@ -8,7 +8,6 @@ import exception.BuildExcelException;
 import exception.ParaseExcelException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.*;
@@ -155,14 +154,31 @@ public class BuildExcelUtil<T> {
         return style;
     }
 
+    /**
+     * 根据路径获取到excel模板,然后写入数据
+     * @param path
+     * @param dateset
+     * @param out
+     * @param clazz
+     * @param sheetIndex
+     */
     public void exportExcelByTemplate(String path, Object dateset, OutputStream out, Class clazz, int sheetIndex) {
         if (null == path || "".equals(path)) {
             throw new ParaseExcelException("The file path is null");
         }
         InputStream inputStream = ParseExcel.class.getResourceAsStream("path");
         exportExcelByTemplate(inputStream, dateset, clazz, out, sheetIndex);
+        InputStreamUtil.close(inputStream);
     }
 
+    /**
+     * 根据inputStream 获取到的excel模板然后写入数据
+     * @param inputStream
+     * @param dateset
+     * @param clazz
+     * @param out
+     * @param sheetIndex
+     */
     public static void exportExcelByTemplate(InputStream inputStream, Object dateset, Class clazz, OutputStream out, int sheetIndex) {
         Workbook workbook = null;
         try {
@@ -176,7 +192,7 @@ public class BuildExcelUtil<T> {
                     ExcelCellListBeginRowAnnotation beginRowAnnotation = (ExcelCellListBeginRowAnnotation) clazz.getDeclaredAnnotation(ExcelCellListBeginRowAnnotation.class);
                     int beginRow = beginRowAnnotation.beginRow();
                     if (beginRow < 0) {
-                        throw new ParaseExcelException("beginRow can not less zero");
+                        throw new BuildExcelException("beginRow can not less zero");
                     }
                     writeListToExcel((List)dateset,beginRow,sheetAt,clazz);
                     //如果开始的不为行大于等于0则不加标题,即便有BuildExcelAnnotation也不解析使用。
@@ -225,9 +241,16 @@ public class BuildExcelUtil<T> {
 
     }
 
+    /**
+     * 把list写进excel中
+     * @param list
+     * @param beginRow
+     * @param sheet
+     * @param clazz
+     */
     private static void writeListToExcel(List list,int beginRow,Sheet sheet,Class clazz){
         if(null == list){
-            throw new ParaseExcelException("list is null");
+            throw new BuildExcelException("list is null");
         }
         try{
             Field[] fields = clazz.getDeclaredFields();
@@ -256,6 +279,26 @@ public class BuildExcelUtil<T> {
         }
 
 
+    }
+    //这个默认加在excel的后面
+    public static void addDataToExcelEnd(String path){
+        if (null == path || "".equals(path)) {
+            throw new ParaseExcelException("The file path is null");
+        }
+        InputStream inputStream = ParseExcel.class.getResourceAsStream("path");
+        addDataToExcelEnd(inputStream);
+        InputStreamUtil.close(inputStream);
+    }
+    public static void addDataToExcelEnd(InputStream inputStream){
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(inputStream);
+
+            Sheet sheetAt = workbook.getSheetAt(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BuildExcelException("addDataToExcelEnd exception");
+        }
     }
 
 }

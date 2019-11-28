@@ -29,8 +29,8 @@ public class ParseExcel<T> {
     private static String EXTENSION_XLS = "xls";
 
     private static String EXTENSION_XLSX = "xlsx";
-
     private static int INIT_ERROR_CODE = -1;
+
 
     /**
      * 以路径的方式读取excel文件
